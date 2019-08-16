@@ -1,6 +1,9 @@
-const express = 'express';
+const express = require('express');
 
 const router = express.Router();
+
+const db = require('./userDb')
+
 
 router.post('/', (req, res) => {
 
@@ -11,7 +14,16 @@ router.post('/:id/posts', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-
+	db.get()
+  .then(users => {
+		res.status(200).json(users)
+  })
+  .catch(err => {
+		res.status(500).json({
+			err: err,
+			message: "The users information could not be retrieved."
+		})
+  })
 });
 
 router.get('/:id', (req, res) => {
